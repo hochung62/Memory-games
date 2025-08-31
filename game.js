@@ -47,9 +47,9 @@ function nextRound() {
   setTimeout(() => {
     hideNumbers();
     showing = false;
-    input.disabled = false;      // 입력창 활성화
-    submitBtn.disabled = false;  // 버튼 활성화
-    input.focus();               // 자동 포커스
+    input.disabled = false;      
+    submitBtn.disabled = false;  
+    input.focus();               
   }, 3000);
 }
 
@@ -62,17 +62,41 @@ function checkAnswer() {
 
   if (userAnswer === correctAnswer) {
     score += 10;
-    resultDiv.textContent = `정답! 🎉 점수: ${score}`;
+    resultDiv.innerHTML = `✅ 정답! 🎉 점수: ${score}`;
     level++;
     nextRound();
   } else {
-    resultDiv.textContent = `틀렸습니다 ❌ 최종 점수: ${score}`;
+    // ❌ 틀린 경우: 글자별 비교
+    let feedbackCorrect = "";
+    let feedbackUser = "";
+    const maxLen = Math.max(userAnswer.length, correctAnswer.length);
+
+    for (let i = 0; i < maxLen; i++) {
+      const userChar = userAnswer[i] || "";
+      const correctChar = correctAnswer[i] || "";
+
+      if (userChar === correctChar) {
+        feedbackCorrect += `<span style="color:blue">${correctChar}</span>`;
+        feedbackUser += `<span style="color:blue">${userChar}</span>`;
+      } else {
+        feedbackCorrect += `<span style="color:red">${correctChar || "_"}</span>`;
+        feedbackUser += `<span style="color:red">${userChar || "_"}</span>`;
+      }
+    }
+
+    resultDiv.innerHTML = `❌ 틀렸습니다! <br>
+      정답: ${feedbackCorrect}<br>
+      입력: ${feedbackUser}<br>
+      최종 점수: ${score}`;
+
     level = 1;
     score = 0;
+
+    // 3초 후 리셋
     setTimeout(() => {
       resultDiv.textContent = `점수: ${score}`;
       nextRound();
-    }, 2000);
+    }, 3000);
   }
 }
 
