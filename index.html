@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>기억력 게임</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    canvas {
+      border: 2px solid black;
+    }
+    #result {
+      margin-top: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+    #answerInput {
+      font-size: 18px;
+      text-align: center;
+      width: 200px;
+    }
+    button {
+      font-size: 18px;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="600" height="400"></canvas>
+  <br>
+  <!-- 모바일에서도 숫자 키패드가 뜨도록 type="number" -->
+  <input type="number" id="answerInput" placeholder="숫자를 입력하세요" disabled>
+  <button id="submitBtn" disabled>확인</button>
+  <div id="result">점수: 0</div>
+  <script src="game.js"></script>
+</body>
+</html>
